@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f8ff">
+  <title>Water Time Reminder</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=4) }}">
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><span class="drop">◆</span>
+        <div>
+          <h1>Water Time Reminder</h1>
+          <p>Stay hydrated. Stay healthy.</p>
+        </div>
+      </div>
+      <button id="setupOpen" class="icon-button" aria-label="Edit profile">⚙</button>
+    </header>
+    <section class="overview panel">
+      <h2><span>▥</span> Today's Overview</h2>
+      <div class="stats">
+        <div class="stat">
+          <i class="bubble blue">💧</i>
+          <div>
+            <small>Daily Water Goal</small>
+            <strong id="goal">—</strong>
+            <small id="goalMl">Set your weight to begin</small>
+          </div>
+        </div>
+        <div class="stat">
+          <i class="bubble green">▤</i>
+          <div>
+            <small>Current Consumed</small>
+            <strong id="consumed">0 L</strong>
+            <small id="consumedMl">0 ml</small>
+          </div>
+        </div>
+        <div class="stat">
+          <i class="bubble orange">◷</i>
+          <div>
+            <small>Remaining</small>
+            <strong id="remaining">—</strong>
+            <small id="remainingMl">—</small>
+          </div>
+        </div>
+        <div class="stat">
+          <i class="bubble purple">％</i>
+          <div>
+            <small>Progress</small>
+            <strong id="percent">0%</strong>
+            <small>of your daily goal</small>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="content-grid">
+      <div class="left-column">
+        <section class="panel add-panel">
+          <h2><span class="circle-plus">+</span> Add Water</h2>
+          <label for="amount">Enter amount (ml)</label>
+          <div class="amount-row">
+            <div class="input-wrap">
+              <input id="amount" type="number" min="250" max="5000" step="250" value="250" placeholder="e.g. 250">
+              <span>ml</span>
+            </div>
+            <button id="addButton" class="primary">💧 Add Water</button>
+          </div>
+          <h3 class="quick-title">⚡ Quick Add</h3>
+          <div class="quick-buttons">
+            <button data-amount="250">+250 ml</button>
+            <button data-amount="500">+500 ml</button>
+            <button data-amount="750">+750 ml</button>
+            <button data-amount="1000">+1000 ml</button>
+          </div>
+          <p id="toast" class="toast" role="status"></p>
+        </section>
+        <section class="panel progress-panel">
+          <h2><span>▥</span> Today's Progress</h2>
+          <div class="progress-content">
+            <div class="ring" id="ring">
+            <div>
+              <strong id="ringPercent">0%</strong>
+              <small>completed</small>
+            </div>
+            </div>
+            <div class="progress-detail">
+              <strong>
+                <b id="progressLiters">0 L</b>
+                <span>/ <span id="goalInline">0 L</span></span>
+              </strong>
+              <div class="bar"><i id="barFill"></i></div>
+              <small>💧 Keep going!</small>
+            </div>
+          </div>
+        </section>
+      </div>
+      <section class="panel reminder-panel">
+        <h2>🔔 Reminder</h2>
+        <div class="active-row">
+          <span><i class="status-dot"></i> Reminder <b id="activeText">Active</b></span>
+          <button class="switch on" id="toggle" aria-label="Toggle reminder" aria-pressed="true">
+            <i></i>
+          </button>
+        </div>
+        <div class="reminder-item">
+          <span>◷</span>
+          <div>
+            <small>Next Reminder</small>
+            <b id="nextReminder">In <span id="intervalText">60</span> min</b>
+          </div>
+        </div>
+        <div class="reminder-item">
+          <span>⟳</span>
+          <div>
+            <small>Reminder Interval</small>
+            <b id="intervalDisplay">60 minutes</b>
+          </div>
+        </div>
+        <div class="reminder-item">
+          <span>▦</span>
+          <div>
+            <small>Last Reminder</small>
+            <b id="lastReminder">Not yet today</b>
+          </div>
+        </div>
+        <div class="tip">♧ &nbsp; Allow browser notifications to get a reminder when it’s time to drink water.</div>
+        <button class="outline" id="notifyButton">Enable notifications</button>
+        <button class="outline" id="missedButton">I missed this reminder</button>
+      </section>
+    </div>
+    <footer>💧 &nbsp; Stay hydrated, one glass at a time.</footer>
+  </main>
+  <dialog id="setupDialog">
+    <form id="setupForm" method="dialog">
+      <button type="button" class="close" id="closeDialog">×</button>
+      <h2>Set up your reminders</h2>
+      <p>We’ll use your weight for the same daily goal calculation as the original app.</p>
+      <label>Your name<input name="name" required maxlength="60" placeholder="Name"></label>
+      <div class="form-row"><label>Age<input name="age" type="number" min="1" max="120" required
+            placeholder="Years"></label><label>Weight<input name="weight" type="number" min="1" step="0.1" required
+            placeholder="kg"></label></div>
+      <label>Reminder interval (minutes)<input name="interval_minutes" type="number" min="1" max="1440" value="60"
+          required></label>
+      <label>Notification sound<select name="sound">
+          <option value="1">Low beep</option>
+          <option value="2">Medium beep</option>
+          <option value="3">High beep</option>
+        </select></label>
+      <button class="primary full" type="submit">Save my setup</button>
+      <p id="setupError" class="error" role="alert"></p>
+    </form>
+  </dialog>
+  <script src="{{ url_for('static', filename='script.js', v=4) }}"></script>
+</body>
+
+</html>
